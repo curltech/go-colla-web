@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"github.com/curltech/go-colla-biz/controller"
 	"github.com/curltech/go-colla-core/base/entity"
 	"github.com/curltech/go-colla-core/base/service"
 	"github.com/curltech/go-colla-core/config"
@@ -9,6 +8,7 @@ import (
 	entity2 "github.com/curltech/go-colla-core/entity"
 	"github.com/curltech/go-colla-core/logger"
 	"github.com/curltech/go-colla-core/util/message"
+	"github.com/curltech/go-colla-web/controller"
 	"github.com/kataras/iris/v12"
 	"time"
 )

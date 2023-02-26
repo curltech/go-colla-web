@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"github.com/curltech/go-colla-biz/controller"
 	"github.com/curltech/go-colla-biz/ruleengine/entity"
 	service2 "github.com/curltech/go-colla-biz/ruleengine/service"
 	"github.com/curltech/go-colla-core/container"
 	"github.com/curltech/go-colla-core/util/message"
+	"github.com/curltech/go-colla-web/controller"
 )
 
 /**

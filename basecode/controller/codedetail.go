@@ -3,9 +3,9 @@ package controller
 import (
 	"github.com/curltech/go-colla-biz/basecode/entity"
 	"github.com/curltech/go-colla-biz/basecode/service"
-	"github.com/curltech/go-colla-biz/controller"
 	"github.com/curltech/go-colla-core/container"
 	"github.com/curltech/go-colla-core/util/message"
+	"github.com/curltech/go-colla-web/controller"
 )
 
 /**

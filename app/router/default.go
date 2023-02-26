@@ -1,8 +1,8 @@
 package router
 
 import (
-	"github.com/curltech/go-colla-biz/controller"
-	controller2 "github.com/curltech/go-colla-biz/rbac/controller"
+	"github.com/curltech/go-colla-web/controller"
+	controller2 "github.com/curltech/go-colla-web/rbac/controller"
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris/v12"
 )

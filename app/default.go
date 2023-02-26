@@ -1,14 +1,14 @@
 package app
 
 import (
-	"github.com/curltech/go-colla-biz/app/router"
-	"github.com/curltech/go-colla-biz/app/websocket"
-	base "github.com/curltech/go-colla-biz/base/controller"
-	"github.com/curltech/go-colla-biz/controller"
-	controller2 "github.com/curltech/go-colla-biz/rbac/controller"
-	"github.com/curltech/go-colla-biz/view"
 	"github.com/curltech/go-colla-core/config"
 	"github.com/curltech/go-colla-core/logger"
+	"github.com/curltech/go-colla-web/app/router"
+	"github.com/curltech/go-colla-web/app/websocket"
+	base "github.com/curltech/go-colla-web/base/controller"
+	"github.com/curltech/go-colla-web/controller"
+	controller2 "github.com/curltech/go-colla-web/rbac/controller"
+	"github.com/curltech/go-colla-web/view"
 	"github.com/kataras/iris/v12"
 	irislogger "github.com/kataras/iris/v12/middleware/logger"
 	"github.com/kataras/iris/v12/middleware/recover"
