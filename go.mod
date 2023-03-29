@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/casbin/casbin/v2 v2.51.1
-	github.com/curltech/go-colla-biz v0.0.17
+	github.com/curltech/go-colla-biz v0.0.18
 	github.com/curltech/go-colla-core v0.1.20
 	github.com/flosch/pongo2/v4 v4.0.2 // indirect
 	github.com/go-playground/validator/v10 v10.11.0
