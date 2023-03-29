@@ -77,7 +77,7 @@ func newApp(name string) *iris.Application {
 	app.HandleDir("/images", iris.Dir("./static/images"))
 	app.HandleDir("/img", iris.Dir("./static/img"))
 	app.HandleDir("/font", iris.Dir("./static/font"))
-	app.HandleDir("/fonts", iris.Dir("./fonts"))
+	app.HandleDir("/fonts", iris.Dir("./static/fonts"))
 
 	app.Use(iris.Compression)
 
