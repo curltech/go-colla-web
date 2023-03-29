@@ -8,13 +8,27 @@ import (
 	base "github.com/curltech/go-colla-web/base/controller"
 	"github.com/curltech/go-colla-web/controller"
 	controller2 "github.com/curltech/go-colla-web/rbac/controller"
-	"github.com/curltech/go-colla-web/view"
 	"github.com/kataras/iris/v12"
 	irislogger "github.com/kataras/iris/v12/middleware/logger"
 	"github.com/kataras/iris/v12/middleware/recover"
 )
 
 var app *iris.Application
+
+/**
+设置视图
+*/
+func Set(app *iris.Application) {
+	if config.AppParams.Template == "html" {
+		tmpl := iris.HTML("./view", ".html")
+		tmpl.Reload(true)
+		app.RegisterView(tmpl)
+	} else if config.AppParams.Template == "pug" {
+		tmpl := iris.Pug("./view", ".pug")
+		tmpl.Reload(true)
+		app.RegisterView(tmpl)
+	}
+}
 
 func setLog() {
 	level, _ := config.GetString("log.level", "info")
@@ -54,12 +68,21 @@ func newApp(name string) *iris.Application {
 
 	app.Favicon("./static/ico/favicon.ico")
 	app.HandleDir("/js", iris.Dir("./static/js"))
-	app.HandleDir("/assets", iris.Dir("./assets"))
+	app.HandleDir("/assets", iris.Dir("./static/assets"))
+	app.HandleDir("/ico", iris.Dir("./static/ico"))
+	app.HandleDir("/icon", iris.Dir("./static/icon"))
+	app.HandleDir("/icons", iris.Dir("./static/icons"))
+	app.HandleDir("/css", iris.Dir("./static/css"))
+	app.HandleDir("/image", iris.Dir("./static/image"))
+	app.HandleDir("/images", iris.Dir("./static/images"))
+	app.HandleDir("/img", iris.Dir("./static/img"))
+	app.HandleDir("/font", iris.Dir("./static/font"))
+	app.HandleDir("/fonts", iris.Dir("./fonts"))
 
 	app.Use(iris.Compression)
 
 	router.Set(app)
-	view.Set(app)
+	Set(app)
 
 	app.I18n.Load("./locales/*/*", "en-US", "el-GR", "zh-CN")
 	app.I18n.SetDefault("zh-CN")
