@@ -8,11 +8,13 @@ import (
 	"github.com/curltech/go-colla-core/logger"
 	"github.com/curltech/go-colla-core/service"
 	"github.com/kataras/golog"
+	"github.com/kataras/iris/v12/core/memstore"
 	"github.com/kataras/iris/v12/sessions"
 	"time"
 )
 
-/**
+/*
+*
 使用iris自带的会话管理功能
 */
 var expire, _ = config.GetInt("session.expire", 45)
@@ -49,7 +51,8 @@ func init() {
 	//}
 }
 
-/**
+/*
+*
 会话数据的数据库集中存储XORM，适用于集群环境的集中会话管理，有另外的两个实现
 分别是redis和badger，都是实现了sessions.Database接口，并设置session使用这个接口的实现
 */
@@ -79,19 +82,19 @@ func (db *XORMDatabase) SetLogger(logger *golog.Logger) {
 */
 // Acquire receives a session's lifetime from the database,
 // if the return value is LifeTime{} then the session manager sets the life time based on the expiration duration lives in configuration.
-func (db *XORMDatabase) Acquire(sid string, expires time.Duration) sessions.LifeTime {
-	session := entity.Session{SessionId: sid}
-	found, _ := db.sessionService.Get(&session, false, "", "")
-	if found {
-		lifeTime := session.LifeTime
-		return sessions.LifeTime{
-			Time: time.Now().Add(time.Duration(lifeTime) * time.Second),
-		}
-	} else {
-		db.sessionService.Insert(&session)
+func (db *XORMDatabase) Acquire(sid string, expires time.Duration) memstore.LifeTime {
+	//session := entity.Session{SessionId: sid}
+	//found, _ := db.sessionService.Get(&session, false, "", "")
+	//if found {
+	//	untilExpire := db.c.Driver.TTL(sid)
+	//	return memstore.LifeTime{
+	//		Time: time.Now().Add(time.Duration(untilExpire) * time.Second),
+	//	}
+	//} else {
+	//	db.sessionService.Insert(&session)
 
-		return sessions.LifeTime{}
-	}
+	return memstore.LifeTime{}
+	//}
 }
 
 // OnUpdateExpiration will re-set the database's session's entry ttl.
