@@ -15,7 +15,8 @@ import (
 
 var app *iris.Application
 
-/**
+/*
+*
 设置视图
 */
 func Set(app *iris.Application) {
@@ -84,7 +85,10 @@ func newApp(name string) *iris.Application {
 	router.Set(app)
 	Set(app)
 
-	app.I18n.Load("./locales/*/*", "en-US", "el-GR", "zh-CN")
+	err := app.I18n.Load("./locales/*/*", "en-US", "el-GR", "zh-CN")
+	if err != nil {
+		return nil
+	}
 	app.I18n.SetDefault("zh-CN")
 
 	return app
@@ -94,7 +98,6 @@ func Start() {
 	if !config.AppParams.Enable {
 		//启动空的主线程
 		select {}
-		return
 	}
 	start()
 }
@@ -104,7 +107,10 @@ func start() {
 	appname := config.GetAppName()
 	app := newApp(appname)
 	config.AppParams.Name = appname
-	controller.RegistTemplateParam("Title", config.AppParams.Name)
+	err := controller.RegistTemplateParam("Title", config.AppParams.Name)
+	if err != nil {
+		return
+	}
 	websocket.Set(app)
 	port := config.ServerParams.Port
 	tlsmode := config.TlsParams.Mode
@@ -112,23 +118,34 @@ func start() {
 		port = config.TlsParams.Port
 	}
 
-	logger.Sugar.Infof("successfully start iris app %v in port %v using %v tls mode,enjoy it!", appname, port, tlsmode)
-
 	var irisAddr = ":" + port
 	if config.ServerParams.Addr != "" {
 		irisAddr = config.ServerParams.Addr + ":" + port
 	}
+	logger.Sugar.Infof("Successfully start iris app %v in port %v using %v tls mode,enjoy it!", appname, port, tlsmode)
 	if tlsmode == "none" {
-		app.Run(iris.Addr(irisAddr), iris.WithSocketSharding, iris.WithoutServerError(iris.ErrServerClosed))
+		err := app.Run(iris.Addr(irisAddr), iris.WithSocketSharding, iris.WithoutServerError(iris.ErrServerClosed))
+		if err != nil {
+			logger.Sugar.Errorf("Start iris app failure %v", err)
+			return
+		}
 	} else if tlsmode == "auto" {
 		url := config.TlsParams.Url
 		mail := config.TlsParams.Email
-		app.Run(iris.AutoTLS(irisAddr, url, mail))
+		err := app.Run(iris.AutoTLS(irisAddr, url, mail))
+		if err != nil {
+			logger.Sugar.Errorf("Start iris app failure %v", err)
+			return
+		}
 	} else if tlsmode == "cert" {
 		cert := config.TlsParams.Cert
 		key := config.TlsParams.Key
-		app.Run(
+		err := app.Run(
 			iris.TLS(irisAddr, cert, key),
 		)
+		if err != nil {
+			logger.Sugar.Errorf("Start iris app failure %v", err)
+			return
+		}
 	}
 }
