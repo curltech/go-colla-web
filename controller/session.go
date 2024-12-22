@@ -83,18 +83,18 @@ func (db *XORMDatabase) SetLogger(logger *golog.Logger) {
 // Acquire receives a session's lifetime from the database,
 // if the return value is LifeTime{} then the session manager sets the life time based on the expiration duration lives in configuration.
 func (db *XORMDatabase) Acquire(sid string, expires time.Duration) memstore.LifeTime {
-	//session := entity.Session{SessionId: sid}
-	//found, _ := db.sessionService.Get(&session, false, "", "")
-	//if found {
-	//	untilExpire := db.c.Driver.TTL(sid)
-	//	return memstore.LifeTime{
-	//		Time: time.Now().Add(time.Duration(untilExpire) * time.Second),
-	//	}
-	//} else {
-	//	db.sessionService.Insert(&session)
+	session := entity.Session{SessionId: sid}
+	found, _ := db.sessionService.Get(&session, false, "", "")
+	if found {
+		lifeTime := session.LifeTime
+		return memstore.LifeTime{
+			Time: time.Now().Add(time.Duration(lifeTime) * time.Second),
+		}
+	} else {
+		db.sessionService.Insert(&session)
 
-	return memstore.LifeTime{}
-	//}
+		return memstore.LifeTime{}
+	}
 }
 
 // OnUpdateExpiration will re-set the database's session's entry ttl.
