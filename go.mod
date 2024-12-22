@@ -4,8 +4,8 @@ go 1.23
 
 require (
 	github.com/casbin/casbin/v2 v2.102.0
-	github.com/curltech/go-colla-biz v0.1.24
-	github.com/curltech/go-colla-core v0.1.24
+	github.com/curltech/go-colla-biz v0.1.25
+	github.com/curltech/go-colla-core v0.1.25
 	github.com/flosch/pongo2/v4 v4.0.2 // indirect
 	github.com/go-playground/validator/v10 v10.23.0
 	github.com/googollee/go-socket.io v1.7.0
