@@ -1,6 +1,6 @@
 module github.com/curltech/go-colla-web
 
-go 1.23
+go 1.24
 
 require (
 	github.com/casbin/casbin/v2 v2.102.0
